@@ -40,6 +40,7 @@ using ::testing::TestEventListeners;
 using ::testing::TestInfo;
 using ::testing::TestPartResult;
 using ::testing::UnitTest;
+using ::testing::TestSuite;
 
 namespace {
 // We will track memory used by this class.
@@ -72,13 +73,49 @@ int Water::allocated_ = 0;
 // the beginning of a test and at the end of a test.
 class LeakChecker : public EmptyTestEventListener {
  private:
+
+  void OnTestProgramStart(const UnitTest& unit_test) override {
+    fprintf(stdout, "TEST %d ==================\n", unit_test.total_test_count());
+    fflush(stdout);
+  }
+
+  // Called after all test activities have ended.
+  void OnTestProgramEnd(const UnitTest& unit_test) override {
+    fprintf(stdout, "TEST %s +++++++++++++++++++\n", unit_test.Passed() ? "PASSED" : "FAILED");
+    fflush(stdout);
+  }
+  
+  void OnEnvironmentsSetUpStart(const UnitTest& /*test_suite*/) override {
+    fprintf(stdout, "TEST=========OnEnvironmentsSetUpStart=========\n");
+  }
+  
+  void OnEnvironmentsSetUpEnd(const UnitTest& /*test_suite*/) override {
+    fprintf(stdout, "TEST=========OnEnvironmentsSetUpEnd=========\n");
+  }
+
+  void OnTestSuiteStart(const TestSuite& /*test_suite*/) override {
+    fprintf(stdout, "TEST=========OnTestSuiteStart=========\n");
+  }
+  void OnTestSuiteEnd(const TestSuite& /*test_suite*/) override {
+    fprintf(stdout, "TEST=========OnTestSuiteEnd=========\n");
+  }
+  void OnEnvironmentsTearDownStart(const UnitTest& /*test_suite*/) override {
+    fprintf(stdout, "TEST=========OnEnvironmentsTearDownStart=========\n");
+  }
+  
+  void OnEnvironmentsTearDownEnd(const UnitTest& /*test_suite*/) override {
+    fprintf(stdout, "TEST=========OnEnvironmentsTearDownEnd=========\n");
+  }
+
   // Called before a test starts.
   void OnTestStart(const TestInfo& /* test_info */) override {
+    fprintf(stdout, "TEST=========OnTestStart=========\n");
     initially_allocated_ = Water::allocated();
   }
 
   // Called after a test ends.
   void OnTestEnd(const TestInfo& /* test_info */) override {
+    fprintf(stdout, "TEST=========OnTestEnd=========\n");
     int difference = Water::allocated() - initially_allocated_;
 
     // You can generate a failure in any event handler except
@@ -89,6 +126,11 @@ class LeakChecker : public EmptyTestEventListener {
 
   int initially_allocated_;
 };
+
+TEST(ListenersTest_111, DoesNotLeak) {
+  Water* water = new Water;
+  delete water;
+}
 
 TEST(ListenersTest, DoesNotLeak) {
   Water* water = new Water;
