@@ -11,3 +11,11 @@ target_link_libraries(test_hello PUBLIC hellolib gtest gtest_main)
 
 add_test(NAME test_hello
          COMMAND test_hello)
+
+add_executable(test_world ${CMAKE_CURRENT_SOURCE_DIR}/test_world.cpp)
+target_include_directories(test_world PUBLIC ${HELLO_WORLD_PROJECT_ROOT}/thirdpart/googletest-1.13.0/googletest/include)
+target_include_directories(test_world PUBLIC ${HELLO_WORLD_PROJECT_ROOT})
+target_link_libraries(test_world PUBLIC worldlib gtest gtest_main)
+
+add_test(NAME test_world
+        COMMAND test_world)
