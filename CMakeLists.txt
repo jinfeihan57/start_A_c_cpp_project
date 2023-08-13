@@ -5,6 +5,8 @@ project(hello_world)
 enable_testing()
 
 set(HELLO_WORLD_PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+set(HELLO_WORLD_BIN_ROOT ${CMAKE_CURRENT_BINARY_DIR})
+
 add_subdirectory(hello)
 add_subdirectory(world)
 
