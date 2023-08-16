@@ -1,0 +1,26 @@
+// launch.json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "helloworldGDB",     //这个应该是F1中出现的名字
+            "preLaunchTask": "Buildhelloworld",   //在launch之前运行的任务名，这个名字一定要跟tasks.json中的任务名字大小写一致
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/main.exe", //需要运行的是当前打开文件的目录中，名字和当前文件相同，但扩展名为exe的程序
+            "args": [],
+            "stopAtEntry": true,           // 选为true则会在打开控制台后停滞，暂时不执行程序
+            "cwd": "${workspaceFolder}",    // 当前工作路径：当前文件所在的工作空间
+            "environment": [],
+            "externalConsole": true,        // 是否使用外部控制台，选false的话，我的vscode会出现错误
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb",        // 调试器，gdb路径添加到环境变量
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }]
+}

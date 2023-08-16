@@ -1,0 +1,37 @@
+// tasks.json
+{
+    // https://code.visualstudio.com/docs/editor/tasks
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CMAKE",   // 任务的名字叫CMAKE，注意是大小写区分的，等会在launch中调用这个名字
+            "type": "shell",    // 任务执行的是shell命令
+            "command": "cmake", // 配置cmake环境变量
+            "args": [
+                "-S./",
+                "-Bbuild",
+                "-L",
+                "-G\\\"MSYS",   // \需要转义
+                "Makefiles\\\"",
+                "-DBUILD_DEBUG:BOOL=ON"
+            ]
+        },
+        {
+            "label": "MAKE",    // 任务的名字叫MAKE，注意是大小写区分的，等会在launch中调用这个名字
+            "type": "shell",    // 任务执行的是shell命令
+            "command": "make",  // 配置make环境变量
+            "args": [
+                "-C",
+                "build"
+            ]
+        },
+        {
+            "label": "Buildhelloworld",   // 任务的名字叫Build，注意是大小写区分的，等会在launch中调用这个名字
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "CMAKE",
+                "MAKE"
+            ]
+        }
+    ]
+}

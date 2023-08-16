@@ -4,6 +4,11 @@ project(hello_world)
 
 enable_testing()
 
+option(BUILD_DEBUG "Builds test!!!" OFF)
+if(BUILD_DEBUG)
+    add_compile_options("-g")
+endif()
+
 set(HELLO_WORLD_PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 set(HELLO_WORLD_BIN_ROOT ${CMAKE_CURRENT_BINARY_DIR})
 
