@@ -11,8 +11,7 @@
                 "-S./",
                 "-Bbuild",
                 "-L",
-                "-G\\\"MSYS",   // \需要转义
-                "Makefiles\\\"",
+                "-G\\\"MSYS Makefiles\\\"", // \需要转义
                 "-DBUILD_DEBUG:BOOL=ON"
             ]
         },

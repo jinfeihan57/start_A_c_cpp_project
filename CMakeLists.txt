@@ -4,7 +4,7 @@ project(hello_world)
 
 enable_testing()
 
-option(BUILD_DEBUG "Builds test!!!" OFF)
+option(BUILD_DEBUG "Builds debug!!!" OFF)
 if(BUILD_DEBUG)
     add_compile_options("-g")
 endif()
